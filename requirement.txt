@@ -1,15 +1,4 @@
-# Core ML Framework
-tensorflow>=2.9.0
-
-# GUI Framework
-gradio>=3.50.0
-
-# Image Processing
-opencv-python>=4.7.0.72
-pillow>=9.0.0
-
-# Core Utilities
-numpy>=1.21.0
-
-# Optional: System utilities (safe to include for some OS)
-matplotlib>=3.5.0
+streamlit
+tensorflow
+opencv-python-headless
+pillow
