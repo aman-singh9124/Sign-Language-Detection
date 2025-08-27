@@ -2,10 +2,7 @@ import streamlit as st
 import numpy as np
 from tensorflow.keras.models import load_model
 from PIL import Image
-import datetime
 import cv2
-import tempfile
-import os
 
 # Load the model
 @st.cache_resource
@@ -14,18 +11,6 @@ def load_asl_model():
 
 model = load_asl_model()
 classes = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")  # A–Z classes
-
-# Helper: Get IST Hour
-
-def get_ist_hour():
-    utc_now = datetime.datetime.utcnow()
-    ist_now = utc_now + datetime.timedelta(hours=5, minutes=30)
-    return ist_now.hour
-
-# Check time window: 6PM to 10PM IST
-def is_within_allowed_time():
-    hour = get_ist_hour()
-    return 18 <= hour < 22
 
 # Prediction on image
 def predict_image(img):
@@ -63,11 +48,6 @@ def capture_webcam_frame():
 st.title("🧠 Sign Language Detection")
 st.markdown("Predict ASL signs from uploaded images or webcam input.")
 
-# Time Check
-if not is_within_allowed_time():
-    st.warning("⛔ Access is only allowed between **6PM to 10PM IST**.")
-    st.stop()
-
 # Tabs for UI
 tab1, tab2 = st.tabs(["📤 Upload Image", "📷 Webcam Detection"])
 
@@ -93,4 +73,4 @@ with tab2:
             frame_expanded = np.expand_dims(frame_resized, axis=0)
             pred = model.predict(frame_expanded)
             label = classes[np.argmax(pred)]
-            st.success(f"🎥 Real-Time Sign: **{label}**")
+            st.success(f"🎥 Real-Time Sign: **{label}**")  
